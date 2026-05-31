@@ -42,8 +42,8 @@ function HeroSection() {
           <div className="mt-12 flex items-center gap-4">
             <div className="flex -space-x-2">
               {[1, 2, 3, 4, 5].map((i) => (
-                <div key={i} className="w-8 h-8 rounded-full bg-accent/80 border-2 border-primary flex items-center justify-center">
-                  <Star size={12} className="text-primary" fill="currentColor" />
+                <div key={i} className="w-8 h-8 rounded-full bg-accent border-2 border-white/20 flex items-center justify-center">
+                  <Star size={12} className="text-white" fill="currentColor" />
                 </div>
               ))}
             </div>

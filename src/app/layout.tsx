@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Playfair_Display, DM_Sans } from "next/font/google";
+import { Inter, DM_Sans } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 
-const playfair = Playfair_Display({
+const inter = Inter({
   variable: "--font-display",
   subsets: ["latin"],
   display: "swap",
@@ -44,7 +44,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale} className={`${playfair.variable} ${dmSans.variable} h-full`}>
+    <html lang={locale} className={`${inter.variable} ${dmSans.variable} h-full`}>
       <body className="min-h-full flex flex-col font-[family-name:var(--font-body)] antialiased">
         <NextIntlClientProvider messages={messages}>
           {children}
