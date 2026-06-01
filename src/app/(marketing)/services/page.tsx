@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { ArrowRight, Sparkles, Zap, Home, Repeat, Truck, HardHat, Building, UtensilsCrossed, Key, Wind } from 'lucide-react'
 
 export const metadata: Metadata = {
@@ -39,34 +38,34 @@ export default function ServicesPage() {
           {services.map((service) => {
             const Icon = service.icon
             return (
-              <Card key={service.slug} hover className="overflow-hidden">
-                <CardContent className="p-6 flex gap-5">
-                  <div className="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
-                    <Icon size={28} className="text-accent" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-2">
-                      <div>
-                        <span className="text-xs font-medium text-accent uppercase tracking-wide">{service.group}</span>
-                        <h2 className="text-lg font-semibold text-primary mt-0.5">{service.name}</h2>
-                      </div>
+              <Link key={service.slug} href={`/book?service=${service.slug}`} className="block">
+                <Card hover className="overflow-hidden h-full">
+                  <CardContent className="p-6 flex gap-5">
+                    <div className="w-14 h-14 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0">
+                      <Icon size={28} className="text-accent" />
                     </div>
-                    <p className="mt-1 text-sm text-muted line-clamp-2">{service.description}</p>
-                    <div className="mt-3 flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <span className="text-sm font-bold text-primary">From {service.price} THB</span>
-                        <span className="text-xs text-muted bg-gray-100 px-2 py-0.5 rounded">{service.duration}</span>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-start justify-between gap-2">
+                        <div>
+                          <span className="text-xs font-medium text-accent uppercase tracking-wide">{service.group}</span>
+                          <h2 className="text-lg font-semibold text-primary mt-0.5">{service.name}</h2>
+                        </div>
                       </div>
-                      <Link href={`/book?service=${service.slug}`}>
-                        <Button variant="ghost" size="sm">
+                      <p className="mt-1 text-sm text-muted line-clamp-2">{service.description}</p>
+                      <div className="mt-3 flex items-center justify-between">
+                        <div className="flex items-center gap-3">
+                          <span className="text-sm font-bold text-primary">From {service.price} THB</span>
+                          <span className="text-xs text-muted bg-gray-100 px-2 py-0.5 rounded">{service.duration}</span>
+                        </div>
+                        <span className="text-accent font-medium text-sm flex items-center">
                           Book
                           <ArrowRight size={14} className="ml-1" />
-                        </Button>
-                      </Link>
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </Link>
             )
           })}
         </div>
