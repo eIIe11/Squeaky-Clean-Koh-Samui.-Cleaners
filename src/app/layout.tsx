@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, DM_Sans } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+import BubbleEffects from "@/components/effects/bubbles";
 import "./globals.css";
 
 const inter = Inter({
@@ -18,11 +19,11 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default: "Squeaky Clean — Premium Cleaning Services Koh Samui",
-    template: "%s | Squeaky Clean Koh Samui",
+    default: "Squeaky Clean — Premium Cleaning Services Thailand",
+    template: "%s | Squeaky Clean Thailand",
   },
   description:
-    "Professional cleaning services across Koh Samui. Villa cleaning, Airbnb turnover, deep cleaning, and more. Book online in 90 seconds.",
+    "Professional cleaning services across Thailand. Villa cleaning, Airbnb turnover, deep cleaning, and more. Book online in 90 seconds.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://squeakycleansamui.com"),
   openGraph: {
     type: "website",
@@ -48,6 +49,7 @@ export default async function RootLayout({
       <body className="min-h-full flex flex-col font-[family-name:var(--font-body)] antialiased">
         <NextIntlClientProvider messages={messages}>
           {children}
+          <BubbleEffects />
         </NextIntlClientProvider>
       </body>
     </html>

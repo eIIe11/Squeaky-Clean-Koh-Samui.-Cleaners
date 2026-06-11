@@ -3,7 +3,7 @@ import { Shield, Award, Heart, Users } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'About Us',
-  description: 'Learn about Squeaky Clean — premium cleaning services trusted by villa owners and residents across Koh Samui.',
+  description: 'Learn about Squeaky Clean — premium cleaning services trusted by villa owners and residents across Thailand.',
 }
 
 export default function AboutPage() {
@@ -15,14 +15,14 @@ export default function AboutPage() {
             About Squeaky Clean
           </h1>
           <p className="mt-4 text-lg text-muted max-w-2xl mx-auto">
-            Professional cleaning services designed for Koh Samui&apos;s villas, homes, and businesses.
+            Professional cleaning services designed for Thailand&apos;s villas, homes, and businesses.
           </p>
         </div>
 
         <div className="prose prose-lg max-w-none text-muted">
           <p>
             Squeaky Clean was founded with a simple mission: deliver consistently exceptional cleaning
-            services to Koh Samui&apos;s homes, villas, and businesses — without the operational headaches
+            services to homes, villas, and businesses across Thailand — without the operational headaches
             that typically come with booking and managing cleaners.
           </p>
           <p>
@@ -34,10 +34,10 @@ export default function AboutPage() {
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-8 mt-16">
           {[
-            { icon: Shield, title: 'Insured & Bonded', description: 'Full liability coverage for your property and belongings.' },
+            { icon: Shield, title: 'Trusted & Reliable', description: 'Vetted, experienced cleaners you can count on every time.' },
             { icon: Award, title: 'Trained Professionals', description: 'Background-checked staff with regular quality audits.' },
             { icon: Heart, title: 'Eco-Friendly', description: 'Non-toxic, biodegradable products safe for families and pets.' },
-            { icon: Users, title: 'Local Team', description: 'Koh Samui-based team who know the island inside and out.' },
+            { icon: Users, title: 'Local Team', description: 'Thailand-based teams who know their area inside and out.' },
           ].map((item) => {
             const Icon = item.icon
             return (

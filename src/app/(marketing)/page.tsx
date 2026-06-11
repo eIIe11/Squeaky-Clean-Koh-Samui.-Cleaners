@@ -16,8 +16,9 @@ function HeroSection() {
   const t = useTranslations('home')
 
   return (
-    <section className="relative overflow-hidden bg-primary">
-      <div className="absolute inset-0 bg-[url('/images/pattern.svg')] opacity-5" />
+    <section className="relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('/images/hero-villa.jpg')] bg-cover bg-center" />
+      <div className="absolute inset-0 bg-primary/80" />
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-28 lg:py-36">
         <div className="max-w-3xl">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-white font-[family-name:var(--font-display)] leading-tight">
@@ -103,7 +104,7 @@ function ServicesSection() {
     },
     {
       title: 'Villa Cleaning',
-      description: 'Premium service for Koh Samui villas and pool areas.',
+      description: 'Premium service for villas and pool areas.',
       price: '4,000',
       slug: 'villa-cleaning',
       icon: Sparkles,

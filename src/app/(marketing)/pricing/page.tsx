@@ -6,7 +6,7 @@ import { ArrowRight, Check } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Pricing',
-  description: 'Transparent pricing for all cleaning services in Koh Samui. No hidden fees. See your exact price before booking.',
+  description: 'Transparent pricing for all cleaning services in Thailand. No hidden fees. See your exact price before booking.',
 }
 
 const pricingTiers = [
@@ -50,7 +50,6 @@ export default function PricingPage() {
           </h1>
           <p className="mt-4 text-lg text-muted">
             No hidden fees. Your price is calculated based on property size and service type.
-            Travel fees apply for zones outside central Koh Samui.
           </p>
         </div>
 
@@ -97,50 +96,28 @@ export default function PricingPage() {
             Save with Recurring Cleaning
           </h2>
           <div className="mt-4 flex flex-col sm:flex-row justify-center gap-6">
-            <div className="text-center">
+            <Link href="/book?recurring=weekly" className="group text-center px-6 py-4 rounded-xl border border-accent/20 hover:border-accent hover:bg-accent/5 transition-all cursor-pointer">
               <p className="text-3xl font-bold text-accent">15%</p>
               <p className="text-sm text-muted">Weekly</p>
-            </div>
-            <div className="text-center">
+              <p className="mt-2 text-xs font-medium text-accent opacity-0 group-hover:opacity-100 transition-opacity">Set up plan →</p>
+            </Link>
+            <Link href="/book?recurring=fortnightly" className="group text-center px-6 py-4 rounded-xl border border-accent/20 hover:border-accent hover:bg-accent/5 transition-all cursor-pointer">
               <p className="text-3xl font-bold text-accent">10%</p>
               <p className="text-sm text-muted">Fortnightly</p>
-            </div>
-            <div className="text-center">
+              <p className="mt-2 text-xs font-medium text-accent opacity-0 group-hover:opacity-100 transition-opacity">Set up plan →</p>
+            </Link>
+            <Link href="/book?recurring=monthly" className="group text-center px-6 py-4 rounded-xl border border-accent/20 hover:border-accent hover:bg-accent/5 transition-all cursor-pointer">
               <p className="text-3xl font-bold text-accent">5%</p>
               <p className="text-sm text-muted">Monthly</p>
-            </div>
+              <p className="mt-2 text-xs font-medium text-accent opacity-0 group-hover:opacity-100 transition-opacity">Set up plan →</p>
+            </Link>
           </div>
           <p className="mt-4 text-sm text-muted max-w-md mx-auto">
-            Set up a recurring plan during booking and the discount applies automatically to every clean.
+            Click a plan to start booking with the discount applied automatically to every clean.
           </p>
         </div>
 
-        {/* Travel fees */}
-        <div className="mt-12">
-          <h2 className="text-2xl font-bold text-primary font-[family-name:var(--font-display)] text-center mb-6">
-            Travel Fees by Zone
-          </h2>
-          <div className="max-w-md mx-auto">
-            <Card>
-              <CardContent className="p-6">
-                <div className="space-y-3">
-                  {[
-                    { zone: 'Chaweng / Bophut / Fisherman\'s Village', fee: 'Free' },
-                    { zone: 'Lamai / Bang Rak / Choeng Mon / Plai Laem', fee: '฿100' },
-                    { zone: 'Maenam', fee: '฿150' },
-                    { zone: 'Lipa Noi / Nathon', fee: '฿200' },
-                    { zone: 'Taling Ngam', fee: '฿250' },
-                  ].map((item) => (
-                    <div key={item.zone} className="flex justify-between items-center text-sm">
-                      <span className="text-muted">{item.zone}</span>
-                      <span className="font-medium text-primary">{item.fee}</span>
-                    </div>
-                  ))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+
       </div>
     </div>
   )

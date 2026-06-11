@@ -4,7 +4,7 @@ import { Mail, MapPin, MessageCircle } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Contact Us',
-  description: 'Get in touch with Squeaky Clean Koh Samui. We respond within 2 hours during business hours.',
+  description: 'Get in touch with Squeaky Clean Thailand. We respond within 2 hours during business hours.',
 }
 
 export default function ContactPage() {
@@ -49,7 +49,7 @@ export default function ContactPage() {
                 <MapPin size={24} className="text-accent" />
               </div>
               <h3 className="font-semibold text-primary">Location</h3>
-              <p className="text-sm text-muted mt-1">Koh Samui, Surat Thani, Thailand</p>
+              <p className="text-sm text-muted mt-1">Serving all of Thailand</p>
             </CardContent>
           </Card>
         </div>

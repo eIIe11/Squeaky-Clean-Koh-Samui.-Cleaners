@@ -65,7 +65,7 @@ export function Footer() {
               </li>
               <li className="flex items-center gap-2">
                 <MapPin size={16} className="text-accent flex-shrink-0" />
-                <span>Koh Samui, Surat Thani, Thailand</span>
+                <span>Serving all of Thailand</span>
               </li>
             </ul>
           </div>

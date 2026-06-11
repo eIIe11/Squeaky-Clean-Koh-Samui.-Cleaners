@@ -5,13 +5,13 @@ import { ArrowRight, Sparkles, Zap, Home, Repeat, Truck, HardHat, Building, Uten
 
 export const metadata: Metadata = {
   title: 'Our Services',
-  description: 'Professional cleaning services in Koh Samui: regular cleaning, deep cleaning, villa cleaning, Airbnb turnover, move-in/out, post-construction, and more.',
+  description: 'Professional cleaning services in Thailand: regular cleaning, deep cleaning, villa cleaning, Airbnb turnover, move-in/out, post-construction, and more.',
 }
 
 const services = [
   { slug: 'regular-cleaning', name: 'Regular Cleaning', price: '1,500', duration: '2 hrs', icon: Sparkles, group: 'Residential', description: 'Comprehensive routine cleaning for homes and apartments. Includes all rooms, kitchen, and bathrooms.' },
   { slug: 'deep-cleaning', name: 'Deep Cleaning', price: '3,500', duration: '4 hrs', icon: Zap, group: 'Residential', description: 'Intensive top-to-bottom cleaning. Behind furniture, inside appliances, grout scrubbing, and detailed attention to every surface.' },
-  { slug: 'villa-cleaning', name: 'Villa Cleaning', price: '4,000', duration: '3 hrs', icon: Home, group: 'Villa', description: 'Premium cleaning service for Koh Samui villas. Pool area tidying, outdoor spaces, and multi-level properties.' },
+  { slug: 'villa-cleaning', name: 'Villa Cleaning', price: '4,000', duration: '3 hrs', icon: Home, group: 'Villa', description: 'Premium cleaning service for villas. Pool area tidying, outdoor spaces, and multi-level properties.' },
   { slug: 'airbnb-turnover', name: 'Airbnb Turnover', price: '2,500', duration: '2 hrs', icon: Repeat, group: 'Villa', description: 'Fast, thorough turnover cleaning between guests. Linen change, restocking, and property inspection included.' },
   { slug: 'move-in-out-cleaning', name: 'Move-In / Move-Out', price: '5,000', duration: '5 hrs', icon: Truck, group: 'Move', description: 'Complete cleaning for property transitions. Inside cabinets, appliance cleaning, wall washing, and window tracks.' },
   { slug: 'post-construction-cleaning', name: 'Post-Construction', price: '6,000', duration: '6 hrs', icon: HardHat, group: 'Specialised', description: 'Specialist cleaning after renovation. Dust removal, debris clearing, cement residue cleaning.' },
@@ -30,7 +30,7 @@ export default function ServicesPage() {
             Our Cleaning Services
           </h1>
           <p className="mt-4 text-lg text-muted">
-            Professional cleaning solutions for every space on Koh Samui. From routine maintenance to specialist deep cleans.
+            Professional cleaning solutions for every space in Thailand. From routine maintenance to specialist deep cleans.
           </p>
         </div>
 
