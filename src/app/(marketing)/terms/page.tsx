@@ -117,8 +117,8 @@ export default function TermsPage() {
         <h2>14. Contact</h2>
         <p>
           If you have questions about these Terms, please contact us at{' '}
-          <a href="mailto:squakycleanthailand@gmail.com" className="text-accent hover:underline">
-            squakycleanthailand@gmail.com
+          <a href="mailto:squeakycleanthailand@gmail.com" className="text-accent hover:underline">
+            squeakycleanthailand@gmail.com
           </a>.
         </p>
       </div>

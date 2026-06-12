@@ -27,8 +27,8 @@ export default function ContactPage() {
                 <Mail size={24} className="text-accent" />
               </div>
               <h3 className="font-semibold text-primary">Email</h3>
-              <a href="mailto:squakycleanthailand@gmail.com" className="text-sm text-muted hover:text-primary mt-1 block">
-                squakycleanthailand@gmail.com
+              <a href="mailto:squeakycleanthailand@gmail.com" className="text-sm text-muted hover:text-primary mt-1 block">
+                squeakycleanthailand@gmail.com
               </a>
             </CardContent>
           </Card>
