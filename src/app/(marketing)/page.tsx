@@ -49,7 +49,7 @@ function HeroSection() {
               ))}
             </div>
             <p className="text-sm text-white/70">
-              <span className="text-white font-semibold">4.9/5</span> from 200+ happy customers
+              <span className="text-white font-semibold">5/5</span> from 200+ happy customers
             </p>
           </div>
         </div>
