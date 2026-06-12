@@ -4,3 +4,22 @@
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
+
+# 301 redirect secondary domains to primary
+[[redirects]]
+  from = "https://squeakycleanthailand.com/*"
+  to = "https://squeakycleansamui.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.squeakycleansamui.com/*"
+  to = "https://squeakycleansamui.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.squeakycleanthailand.com/*"
+  to = "https://squeakycleansamui.com/:splat"
+  status = 301
+  force = true
