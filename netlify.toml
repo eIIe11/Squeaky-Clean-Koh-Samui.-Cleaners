@@ -23,3 +23,15 @@
   to = "https://squeakycleansamui.com/:splat"
   status = 301
   force = true
+
+[[redirects]]
+  from = "https://kohsamuicleaners.com/*"
+  to = "https://squeakycleansamui.com/:splat"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "https://www.kohsamuicleaners.com/*"
+  to = "https://squeakycleansamui.com/:splat"
+  status = 301
+  force = true
