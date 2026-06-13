@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, Check } from 'lucide-react'
+import { ArrowRight, Check, Leaf, Droplets } from 'lucide-react'
 
 export const metadata: Metadata = {
   title: 'Pricing',
@@ -88,6 +88,31 @@ export default function PricingPage() {
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        {/* Natural Products Add-on */}
+        <div className="bg-green-50 border border-green-200 rounded-2xl p-8 mb-12">
+          <div className="flex flex-col sm:flex-row items-center gap-6">
+            <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center flex-shrink-0">
+              <Droplets size={32} className="text-green-600" />
+            </div>
+            <div className="flex-1 text-center sm:text-left">
+              <h2 className="text-2xl font-bold text-primary font-[family-name:var(--font-display)] flex items-center gap-2 justify-center sm:justify-start">
+                <Leaf size={22} className="text-green-600" />
+                Natural Products Upgrade
+              </h2>
+              <p className="mt-2 text-muted">
+                Prefer chemical-free cleaning? Add our 100% natural, essential oil-based products to any service.
+                Made with lavender, tea tree, and citrus oils — safe for children, pets, and sensitive skin.
+              </p>
+              <p className="mt-2 text-lg font-bold text-green-700">+฿500 per booking</p>
+            </div>
+            <Link href="/book" className="flex-shrink-0">
+              <Button className="bg-green-600 hover:bg-green-700 text-white">
+                Book with Natural Products <ArrowRight size={16} className="ml-1" />
+              </Button>
+            </Link>
+          </div>
         </div>
 
         {/* Recurring discount callout */}

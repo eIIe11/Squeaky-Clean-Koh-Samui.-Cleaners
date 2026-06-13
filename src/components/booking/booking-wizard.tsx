@@ -22,6 +22,7 @@ export interface BookingData {
   time: string
   isRecurring: boolean
   recurringFrequency: string
+  useNaturalProducts: boolean
   specialRequirements: string[]
   specialInstructions: string
   fullName: string
@@ -43,6 +44,7 @@ const initialData: BookingData = {
   time: '',
   isRecurring: false,
   recurringFrequency: '',
+  useNaturalProducts: false,
   specialRequirements: [],
   specialInstructions: '',
   fullName: '',

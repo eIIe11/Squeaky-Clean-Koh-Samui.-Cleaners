@@ -15,6 +15,7 @@ interface CreateBookingInput {
   time: string
   isRecurring: boolean
   recurringFrequency: string
+  useNaturalProducts: boolean
   specialRequirements: string[]
   specialInstructions: string
   fullName: string
@@ -95,7 +96,8 @@ export async function createBooking(input: CreateBookingInput) {
   const durationMinutes = service?.base_duration_minutes || 120
 
   // 4. Calculate pricing
-  const subtotal = Number(basePriceTHB) + input.bedrooms * Number(bedroomPrice) + input.bathrooms * Number(bathroomPrice)
+  const naturalProductsFee = input.useNaturalProducts ? 500 : 0
+  const subtotal = Number(basePriceTHB) + input.bedrooms * Number(bedroomPrice) + input.bathrooms * Number(bathroomPrice) + naturalProductsFee
   let discountPercent = 0
   if (input.isRecurring) {
     const freq = input.recurringFrequency
@@ -144,7 +146,9 @@ export async function createBooking(input: CreateBookingInput) {
       duration_minutes: durationMinutes,
       num_bedrooms: input.bedrooms,
       num_bathrooms: input.bathrooms,
-      special_requirements: input.specialRequirements.length > 0 ? input.specialRequirements : null,
+      special_requirements: input.specialRequirements.length > 0 || input.useNaturalProducts
+        ? [...input.specialRequirements, ...(input.useNaturalProducts ? ['natural_products'] : [])]
+        : null,
       special_instructions: input.specialInstructions || null,
       is_recurring: input.isRecurring,
       assigned_cleaners: [],

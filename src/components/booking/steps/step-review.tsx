@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
-import { CheckCircle, CreditCard, QrCode, Building } from 'lucide-react'
+import { CheckCircle, CreditCard, QrCode, Building, Leaf } from 'lucide-react'
 import { format } from 'date-fns'
 import { createBooking } from '@/lib/actions/booking'
 import type { BookingData } from '../booking-wizard'
@@ -34,13 +34,13 @@ export function StepReviewPay({ data, updateData, onBack }: Props) {
   const basePrice = 2500
   const bedroomFee = data.bedrooms * 300
   const bathroomFee = data.bathrooms * 200
-  const travelFee = 0
-  const subtotal = basePrice + bedroomFee + bathroomFee
+  const naturalProductsFee = data.useNaturalProducts ? 500 : 0
+  const subtotal = basePrice + bedroomFee + bathroomFee + naturalProductsFee
   const discountPercent = data.isRecurring
     ? (data.recurringFrequency === 'weekly' ? 15 : data.recurringFrequency === 'fortnightly' ? 10 : 5)
     : 0
   const discount = data.isRecurring ? Math.round(subtotal * discountPercent / 100) : 0
-  const total = subtotal + travelFee - discount
+  const total = subtotal - discount
 
   const handleSubmit = async () => {
     setIsSubmitting(true)
@@ -118,6 +118,12 @@ export function StepReviewPay({ data, updateData, onBack }: Props) {
             <span className="text-sm text-muted">Address</span>
             <span className="text-sm font-medium text-right max-w-[200px]">{data.address || '—'}</span>
           </div>
+          {data.useNaturalProducts && (
+            <div className="flex justify-between">
+              <span className="text-sm text-muted flex items-center gap-1"><Leaf size={14} className="text-green-600" /> Natural Products</span>
+              <span className="text-sm font-medium text-green-700">Included</span>
+            </div>
+          )}
           {data.isRecurring && (
             <div className="flex justify-between">
               <span className="text-sm text-muted">Recurring</span>
@@ -133,13 +139,13 @@ export function StepReviewPay({ data, updateData, onBack }: Props) {
       <Card>
         <CardContent className="p-6 space-y-3">
           <div className="flex justify-between text-sm">
-            <span className="text-muted">{t('subtotal')}</span>
-            <span>{subtotal.toLocaleString()} THB</span>
+            <span className="text-muted">Base + rooms</span>
+            <span>{(basePrice + bedroomFee + bathroomFee).toLocaleString()} THB</span>
           </div>
-          {travelFee > 0 && (
-            <div className="flex justify-between text-sm">
-              <span className="text-muted">{t('travelFee')}</span>
-              <span>{travelFee.toLocaleString()} THB</span>
+          {naturalProductsFee > 0 && (
+            <div className="flex justify-between text-sm text-green-700">
+              <span className="flex items-center gap-1"><Leaf size={12} /> Natural Products</span>
+              <span>+{naturalProductsFee.toLocaleString()} THB</span>
             </div>
           )}
           {discount > 0 && (
