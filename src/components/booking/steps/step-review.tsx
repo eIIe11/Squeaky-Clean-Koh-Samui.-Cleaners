@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
 import { CheckCircle, CreditCard, QrCode, Building } from 'lucide-react'
 import { format } from 'date-fns'
+import { createBooking } from '@/lib/actions/booking'
 import type { BookingData } from '../booking-wizard'
 
 interface Props {
@@ -26,23 +27,39 @@ export function StepReviewPay({ data, updateData, onBack }: Props) {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isConfirmed, setIsConfirmed] = useState(false)
   const [bookingRef, setBookingRef] = useState('')
+  const [totalPrice, setTotalPrice] = useState(0)
+  const [error, setError] = useState('')
 
-  // Price calculation (simplified for Phase 1)
+  // Price calculation
   const basePrice = 2500
   const bedroomFee = data.bedrooms * 300
   const bathroomFee = data.bathrooms * 200
   const travelFee = 0
   const subtotal = basePrice + bedroomFee + bathroomFee
-  const discount = data.isRecurring ? Math.round(subtotal * 0.15) : 0
+  const discountPercent = data.isRecurring
+    ? (data.recurringFrequency === 'weekly' ? 15 : data.recurringFrequency === 'fortnightly' ? 10 : 5)
+    : 0
+  const discount = data.isRecurring ? Math.round(subtotal * discountPercent / 100) : 0
   const total = subtotal + travelFee - discount
 
   const handleSubmit = async () => {
     setIsSubmitting(true)
-    // Simulate API call for Phase 1
-    await new Promise((resolve) => setTimeout(resolve, 1500))
-    setBookingRef(`KS-${new Date().getFullYear()}-${String(Math.floor(Math.random() * 9999)).padStart(4, '0')}`)
-    setIsConfirmed(true)
-    setIsSubmitting(false)
+    setError('')
+
+    try {
+      const result = await createBooking(data)
+      if (result.success && result.bookingReference) {
+        setBookingRef(result.bookingReference)
+        setTotalPrice(result.total || total)
+        setIsConfirmed(true)
+      } else {
+        setError(result.error || 'Something went wrong. Please try again.')
+      }
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (isConfirmed) {
@@ -57,6 +74,9 @@ export function StepReviewPay({ data, updateData, onBack }: Props) {
         <p className="mt-2 text-muted">
           {t('bookingReference', { reference: bookingRef })}
         </p>
+        <p className="mt-1 text-lg font-semibold text-primary">
+          Total: {totalPrice.toLocaleString()} THB
+        </p>
         <p className="mt-4 text-sm text-muted">
           We&apos;ve sent a confirmation to <strong>{data.email}</strong>. You can track your booking in the customer portal.
         </p>
@@ -70,6 +90,12 @@ export function StepReviewPay({ data, updateData, onBack }: Props) {
   return (
     <div className="space-y-6">
       <p className="text-lg text-muted">{t('reviewBooking')}</p>
+
+      {error && (
+        <div className="p-3 rounded-lg bg-red-50 text-red-600 text-sm">
+          {error}
+        </div>
+      )}
 
       {/* Booking Summary */}
       <Card>
@@ -95,7 +121,9 @@ export function StepReviewPay({ data, updateData, onBack }: Props) {
           {data.isRecurring && (
             <div className="flex justify-between">
               <span className="text-sm text-muted">Recurring</span>
-              <span className="text-sm font-medium text-success">Weekly (15% off)</span>
+              <span className="text-sm font-medium text-success">
+                {data.recurringFrequency === 'weekly' ? 'Weekly' : data.recurringFrequency === 'fortnightly' ? 'Fortnightly' : 'Monthly'} ({discountPercent}% off)
+              </span>
             </div>
           )}
         </CardContent>
@@ -116,7 +144,7 @@ export function StepReviewPay({ data, updateData, onBack }: Props) {
           )}
           {discount > 0 && (
             <div className="flex justify-between text-sm text-success">
-              <span>{t('discount')} (15% recurring)</span>
+              <span>{t('discount')} ({discountPercent}% recurring)</span>
               <span>-{discount.toLocaleString()} THB</span>
             </div>
           )}

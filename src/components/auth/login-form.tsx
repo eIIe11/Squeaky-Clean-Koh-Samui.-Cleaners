@@ -5,24 +5,37 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
 import { Mail, Globe } from 'lucide-react'
+import { signInWithMagicLink, signInWithGoogle } from '@/lib/actions/auth'
 
 export function LoginForm() {
   const [email, setEmail] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isSent, setIsSent] = useState(false)
+  const [error, setError] = useState('')
 
   const handleMagicLink = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    // In production, this calls Supabase Auth
-    await new Promise((resolve) => setTimeout(resolve, 1000))
-    setIsSent(true)
-    setIsLoading(false)
+    setError('')
+
+    try {
+      const formData = new FormData()
+      formData.set('email', email)
+      await signInWithMagicLink(formData)
+      setIsSent(true)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
   }
 
   const handleGoogleLogin = async () => {
-    // In production, this triggers Supabase Google OAuth
-    alert('Google SSO will be configured with Supabase Auth.')
+    try {
+      await signInWithGoogle()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Google sign-in failed. Please try again.')
+    }
   }
 
   if (isSent) {
@@ -50,6 +63,12 @@ export function LoginForm() {
   return (
     <Card>
       <CardContent className="p-8 space-y-6">
+        {error && (
+          <div className="p-3 rounded-lg bg-red-50 text-red-600 text-sm">
+            {error}
+          </div>
+        )}
+
         {/* Google SSO */}
         <Button
           variant="outline"

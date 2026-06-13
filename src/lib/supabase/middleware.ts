@@ -33,19 +33,37 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Protect admin routes
-  if (request.nextUrl.pathname.startsWith('/admin') && !user) {
+  const pathname = request.nextUrl.pathname
+
+  // Protect admin routes — must be authenticated with admin role
+  if (pathname.startsWith('/admin')) {
+    if (!user) {
+      const url = request.nextUrl.clone()
+      url.pathname = '/login'
+      url.searchParams.set('redirect', pathname)
+      return NextResponse.redirect(url)
+    }
+    const role = user.user_metadata?.role
+    if (role !== 'admin' && role !== 'owner') {
+      const url = request.nextUrl.clone()
+      url.pathname = '/'
+      return NextResponse.redirect(url)
+    }
+  }
+
+  // Protect portal routes — must be authenticated
+  if (pathname.startsWith('/portal') && !user) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
-    url.searchParams.set('redirect', request.nextUrl.pathname)
+    url.searchParams.set('redirect', pathname)
     return NextResponse.redirect(url)
   }
 
-  // Protect portal routes
-  if (request.nextUrl.pathname.startsWith('/portal') && !user) {
+  // Protect cleaner routes — must be authenticated
+  if (pathname.startsWith('/cleaner') && !user) {
     const url = request.nextUrl.clone()
     url.pathname = '/login'
-    url.searchParams.set('redirect', request.nextUrl.pathname)
+    url.searchParams.set('redirect', pathname)
     return NextResponse.redirect(url)
   }
 
