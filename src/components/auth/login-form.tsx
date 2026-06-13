@@ -1,17 +1,40 @@
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Card, CardContent } from '@/components/ui/card'
-import { Mail, Globe } from 'lucide-react'
-import { signInWithMagicLink, signInWithGoogle } from '@/lib/actions/auth'
+import { Mail, Lock, Globe } from 'lucide-react'
+import { signInWithMagicLink, signInWithPassword, signInWithGoogle } from '@/lib/actions/auth'
 
 export function LoginForm() {
+  const router = useRouter()
   const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const [isSent, setIsSent] = useState(false)
   const [error, setError] = useState('')
+  const [mode, setMode] = useState<'password' | 'magic'>('password')
+
+  const handlePasswordLogin = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    setError('')
+
+    try {
+      const formData = new FormData()
+      formData.set('email', email)
+      formData.set('password', password)
+      await signInWithPassword(formData)
+      router.push('/admin')
+      router.refresh()
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Invalid email or password.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   const handleMagicLink = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -89,30 +112,74 @@ export function LoginForm() {
           </div>
         </div>
 
-        {/* Magic Link */}
-        <form onSubmit={handleMagicLink} className="space-y-4">
-          <Input
-            label="Email address"
-            type="email"
-            placeholder="you@example.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-          <Button
-            type="submit"
-            size="lg"
-            className="w-full"
-            isLoading={isLoading}
-            disabled={!email.trim()}
-          >
-            <Mail size={18} className="mr-2" />
-            Send Magic Link
-          </Button>
-        </form>
+        {mode === 'password' ? (
+          <form onSubmit={handlePasswordLogin} className="space-y-4">
+            <Input
+              label="Email address"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <Input
+              label="Password"
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+            />
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full"
+              isLoading={isLoading}
+              disabled={!email.trim() || !password.trim()}
+            >
+              <Lock size={18} className="mr-2" />
+              Sign In
+            </Button>
+            <button
+              type="button"
+              onClick={() => setMode('magic')}
+              className="w-full text-sm text-primary hover:underline"
+            >
+              Use magic link instead (no password)
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleMagicLink} className="space-y-4">
+            <Input
+              label="Email address"
+              type="email"
+              placeholder="you@example.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <Button
+              type="submit"
+              size="lg"
+              className="w-full"
+              isLoading={isLoading}
+              disabled={!email.trim()}
+            >
+              <Mail size={18} className="mr-2" />
+              Send Magic Link
+            </Button>
+            <button
+              type="button"
+              onClick={() => setMode('password')}
+              className="w-full text-sm text-primary hover:underline"
+            >
+              Use password instead
+            </button>
+          </form>
+        )}
 
         <p className="text-xs text-center text-muted">
-          No password needed. We&apos;ll email you a secure login link.
+          Admin access only. Contact your administrator for credentials.
         </p>
       </CardContent>
     </Card>
