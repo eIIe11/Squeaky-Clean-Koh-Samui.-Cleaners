@@ -2,8 +2,8 @@
 
 import { useTranslations } from 'next-intl'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { Home, Building, Castle, Store, Minus, Plus } from 'lucide-react'
+import { AddressAutocomplete } from '../address-autocomplete'
 import type { BookingData } from '../booking-wizard'
 
 interface Props {
@@ -62,12 +62,11 @@ export function StepPropertyDetails({ data, updateData, onNext, onBack }: Props)
     <div className="space-y-8">
       {/* Address */}
       <div>
-        <Input
+        <AddressAutocomplete
           label={t('propertyAddress')}
-          placeholder="Start typing your address..."
           value={data.address}
-          onChange={(e) => updateData({ address: e.target.value })}
-          helperText="We'll detect your zone and travel fee automatically"
+          onChange={(address) => updateData({ address })}
+          placeholder="Start typing your Thai address..."
         />
       </div>
 
