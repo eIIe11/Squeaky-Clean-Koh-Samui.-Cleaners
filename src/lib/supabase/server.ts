@@ -1,4 +1,5 @@
 import { createServerClient } from '@supabase/ssr'
+import { createClient } from '@supabase/supabase-js'
 import { cookies } from 'next/headers'
 import type { Database } from '@/types/database'
 
@@ -35,16 +36,10 @@ export function createAdminClient() {
     throw new Error('Supabase is not configured. Please set NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY environment variables.')
   }
 
-  return createServerClient<Database>(
-    url,
-    key,
-    {
-      cookies: {
-        getAll() {
-          return []
-        },
-        setAll() {},
-      },
-    }
-  )
+  return createClient<Database>(url, key, {
+    auth: {
+      autoRefreshToken: false,
+      persistSession: false,
+    },
+  })
 }
