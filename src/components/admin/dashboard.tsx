@@ -3,13 +3,15 @@
 import { useEffect, useState } from 'react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { CalendarDays, DollarSign, Users, Clock, ChevronRight, RefreshCw } from 'lucide-react'
+import { CalendarDays, DollarSign, Users, UserCheck, ChevronRight, RefreshCw } from 'lucide-react'
 import { getDashboardData } from '@/lib/actions/admin'
+import Link from 'next/link'
 
 interface DashboardStats {
   todayBookings: number
   monthRevenue: number
   activeCustomers: number
+  totalStaff: number
 }
 
 interface DashboardBooking {
@@ -35,8 +37,7 @@ export function AdminDashboard() {
       setStats(data.stats)
       setBookings(data.bookings)
     } catch {
-      // Fallback to empty state
-      setStats({ todayBookings: 0, monthRevenue: 0, activeCustomers: 0 })
+      setStats({ todayBookings: 0, monthRevenue: 0, activeCustomers: 0, totalStaff: 0 })
       setBookings([])
     } finally {
       setIsLoading(false)
@@ -51,7 +52,7 @@ export function AdminDashboard() {
     { label: "Today's Bookings", value: stats?.todayBookings ?? 0, icon: CalendarDays, format: (v: number) => String(v) },
     { label: 'Revenue (Month)', value: stats?.monthRevenue ?? 0, icon: DollarSign, format: (v: number) => `฿${v.toLocaleString()}` },
     { label: 'Active Customers', value: stats?.activeCustomers ?? 0, icon: Users, format: (v: number) => String(v) },
-    { label: 'Avg. Job Duration', value: 0, icon: Clock, format: () => '—' },
+    { label: 'Active Staff', value: stats?.totalStaff ?? 0, icon: UserCheck, format: (v: number) => String(v) },
   ]
 
   return (
@@ -70,7 +71,9 @@ export function AdminDashboard() {
           <Button variant="outline" size="sm" onClick={loadData} disabled={isLoading}>
             <RefreshCw size={14} className={isLoading ? 'animate-spin' : ''} />
           </Button>
-          <Button size="sm">+ New Booking</Button>
+          <Link href="/book">
+            <Button size="sm">+ New Booking</Button>
+          </Link>
         </div>
       </div>
 
@@ -98,13 +101,35 @@ export function AdminDashboard() {
         })}
       </div>
 
+      {/* Quick Actions */}
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+        <Link href="/admin/bookings" className="p-4 bg-white rounded-xl border border-gray-100 hover:border-primary/30 hover:shadow-sm transition-all text-center">
+          <CalendarDays size={24} className="mx-auto text-primary mb-2" />
+          <span className="text-sm font-medium text-text">All Bookings</span>
+        </Link>
+        <Link href="/admin/staff" className="p-4 bg-white rounded-xl border border-gray-100 hover:border-primary/30 hover:shadow-sm transition-all text-center">
+          <UserCheck size={24} className="mx-auto text-primary mb-2" />
+          <span className="text-sm font-medium text-text">Manage Staff</span>
+        </Link>
+        <Link href="/admin/customers" className="p-4 bg-white rounded-xl border border-gray-100 hover:border-primary/30 hover:shadow-sm transition-all text-center">
+          <Users size={24} className="mx-auto text-primary mb-2" />
+          <span className="text-sm font-medium text-text">Customers</span>
+        </Link>
+        <Link href="/admin/settings" className="p-4 bg-white rounded-xl border border-gray-100 hover:border-primary/30 hover:shadow-sm transition-all text-center">
+          <DollarSign size={24} className="mx-auto text-primary mb-2" />
+          <span className="text-sm font-medium text-text">Settings</span>
+        </Link>
+      </div>
+
       {/* Recent Bookings */}
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <h2 className="text-lg font-semibold text-primary">Upcoming Bookings</h2>
-          <Button variant="ghost" size="sm">
-            View All <ChevronRight size={14} className="ml-1" />
-          </Button>
+          <Link href="/admin/bookings">
+            <Button variant="ghost" size="sm">
+              View All <ChevronRight size={14} className="ml-1" />
+            </Button>
+          </Link>
         </CardHeader>
         {bookings.length === 0 && !isLoading ? (
           <CardContent className="py-12 text-center">
@@ -139,9 +164,11 @@ export function AdminDashboard() {
                       </span>
                     </td>
                     <td className="px-6 py-4">
-                      <Button variant="ghost" size="sm">
-                        <ChevronRight size={16} />
-                      </Button>
+                      <Link href="/admin/bookings">
+                        <Button variant="ghost" size="sm">
+                          <ChevronRight size={16} />
+                        </Button>
+                      </Link>
                     </td>
                   </tr>
                 ))}
