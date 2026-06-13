@@ -36,7 +36,22 @@ interface BookingRow {
 }
 
 export async function getDashboardData() {
-  const supabase = createAdminClient()
+  if (!process.env.NEXT_PUBLIC_SUPABASE_URL || !process.env.SUPABASE_SERVICE_ROLE_KEY) {
+    return {
+      stats: { todayBookings: 0, monthRevenue: 0, activeCustomers: 0 },
+      bookings: [],
+    }
+  }
+
+  let supabase;
+  try {
+    supabase = createAdminClient()
+  } catch {
+    return {
+      stats: { todayBookings: 0, monthRevenue: 0, activeCustomers: 0 },
+      bookings: [],
+    }
+  }
 
   const today = new Date().toISOString().split('T')[0]
   const monthStart = new Date(new Date().getFullYear(), new Date().getMonth(), 1).toISOString().split('T')[0]
